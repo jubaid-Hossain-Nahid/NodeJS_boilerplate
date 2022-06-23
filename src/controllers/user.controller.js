@@ -6,6 +6,7 @@ const { userService } = require('../services');
 
 const createUser = catchAsync(async (req, res) => {
   const user = await userService.createUser(req.body);
+  delete (await user.password);
   res.status(httpStatus.CREATED).send(user);
 });
 
@@ -21,6 +22,7 @@ const getUser = catchAsync(async (req, res) => {
   if (!user) {
     throw new ApiError(httpStatus.NOT_FOUND, 'User not found');
   }
+  delete (await user.password);
   res.send(user);
 });
 
